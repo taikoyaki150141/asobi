@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Disable Extension</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h3>Disable Extension</h3>
+  <input type="text" id="extensionId" placeholder="Enter extension ID">
+  <button id="disableButton">Disable</button>
+
+  <script>
+  document.getElementById("disableButton").addEventListener("click", () => {
+    const extensionId = document.getElementById("extensionId").value;
+    if (extensionId) {
+      chrome.runtime.sendMessage({action: "disableExtension", extensionId}, (response) => {
+        if (response.status === "done") {
+          alert(`Extension ${extensionId} has been disabled.`);
+        } else {
+          alert("Failed to disable the extension.");
+        }
+      });
+    } else {
+      alert("Please enter an extension ID.");
+    }
+  });
+  </script>
+</body>
+</html>
